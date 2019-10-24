@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Articles::DETAIL{% endblock title %}
+
+{% block container %}
+<h2>DETAIL</h2>
+
+{{ article.title }}<br>
+{{ article.content }}<br>
+{{ article.created_at }}<br>
+{{ article.updated_at }}<hr>
+
+<form action="{% url 'articles:liked' article.pk %}" method="post">
+  {% csrf_token %}
+  <button type="submit">좋아요</button>
+</form>
+<!-- () 빼세요 -->
+<p>{{ article.liked_users.all | length }}명이 좋아합니다.</p>
+
+<a href="{% url 'articles:index' %}">index</a>
+<!--  -->
+{% if request.user == article.user %}
+<a href="{% url 'articles:update' article.pk %}">update</a>
+<form action="{% url 'articles:delete' article.pk %}" method="POST">
+  {% csrf_token %}
+  <button type="submit">delete</button>
+</form>
+{% endif %}
+<hr>
+
+{% for comment in comments %}
+{{ comment.content }}
+{% if request.user == comment.user %}
+<form action="{% url 'articles:commentdelete' article.pk comment.pk %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">commentdelete</button>
+</form>
+<br>
+{% endif %}
+{% endfor %}
+<hr>
+
+<form action="{% url 'articles:commentcreate' article.pk %}" method="POST">
+  {{ commentform.as_p }}
+  {% csrf_token %}
+  <button type="submit">commentcreate</button>
+</form>
+
+{% endblock container %}

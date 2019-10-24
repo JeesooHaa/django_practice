@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Articles::Create{% endblock title %}
+
+{% block container %}
+<h2>CREATE</h2>
+<form method="POST">
+  {% csrf_token %}
+  {{ articleform.as_p }}
+  <button type="submit">create</button>
+</form>
+{% endblock container %}

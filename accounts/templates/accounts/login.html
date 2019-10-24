@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Accounts::login{% endblock title %}
+
+{% block container %}
+<h2>CREATE</h2>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">login</button>
+</form>
+{% endblock container %}
