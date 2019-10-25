@@ -35,6 +35,8 @@ def login(request):
         if form.is_valid():
             #
             auth_login(request, form.get_user())
+            # 장고 DB 의 세션과 웹 쿠키가 남아있으면 로그인된 상태로 서버가 켜짐 / 세션을 DB 가 아닌 메모리에 저장한다면 자동 로그아웃 
+            # GET 은 query 를 받아오기 위한 함수 / 일반적으로 GET 요청으로 오기 때문에 명시적으로 표시됨 
             # next_page = request.GET.get('next')
             # return redirect(next_page or 'articles:index')
             return redirect('articles:index')
